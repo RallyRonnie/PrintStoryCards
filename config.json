@@ -1,0 +1,13 @@
+{
+    "name": "PrintStoryCards",
+    "className": "CustomApp",
+    "server": "https://test1cluster.rallydev.com",
+    "sdk": "x",
+    "javascript": [
+        "Card.js",
+        "App.js"
+    ],
+    "css": [
+        "app.css"
+    ]
+}
