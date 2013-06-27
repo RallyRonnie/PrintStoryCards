@@ -92,10 +92,6 @@ Ext.define('CustomApp', {
     _onButtonPressed: function() {
         var title, options;
         var css = document.getElementsByTagName('style')[0].innerHTML;
-
-        debugger;
-
-        //var myHappyHTML = document.documentElement.innerHTML;
         
         title = this.iterationCombobox.rawValue + ' Stories';
         options = "toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=1000,height=500";
@@ -103,24 +99,15 @@ Ext.define('CustomApp', {
         
         doc = printWindow.document;
 
-
-
         cardMarkup = this.down('#card');
 
         doc.write('<html><head><style>' + css + '</style><title>' + title + '</title>');
-
-        Ext.each(Ext.query('link'), function(stylesheet){
-                this._injectContent('', 'link', {
-                    rel: 'stylesheet',
-                    href: stylesheet.href,
-                    type: 'text/css'
-                }, doc.getElementsByTagName('head')[0]);
-        }, this);
-
         doc.write('</head><body class="landscape">');
         doc.write(cardMarkup.getEl().dom.innerHTML);
         doc.write('</body></html>');
         doc.close();
+
+        this._injectCSS(printWindow);
 
         printWindow.print();
     },
@@ -140,6 +127,17 @@ Ext.define('CustomApp', {
             element.innerHTML = html;
         }
         return container.appendChild(element);
+    },
+
+    _injectCSS: function(printWindow){
+        Ext.each(Ext.query('link'), function(stylesheet){
+                this._injectContent('', 'link', {
+                rel: 'stylesheet',
+                href: stylesheet.href,
+                type: 'text/css'
+            }, printWindow.document.getElementsByTagName('head')[0], printWindow);
+        }, this);
+
     }
 
     
