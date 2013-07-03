@@ -9,7 +9,7 @@ html {
 
 .description {
     float: left;
-    font: 12pt Georgia, sans-serif;
+    font: 12pt Arial, Helvetica, sans-serif;
     margin: 0.25em auto 0 auto;
     padding-left: 1.0em;
     padding-right: 1.0em;
@@ -28,7 +28,7 @@ html {
 }
 
 .card-title {
-    font: bold 28px Genova, sans-serif;
+    font: bold 28px Arial, Helvetica, sans-serif;
     padding-top: 0.5em;
     text-align: center;
 }
@@ -101,6 +101,7 @@ body {
     float: left;
     display: inline;
     margin-top: 10px;
+    margin-left: 5px;
 }
 
 .print-button {

@@ -17,10 +17,13 @@ Ext.define('CustomApp', {
         this.down('#headerContainer').add({
             xtype: 'rallyiterationcombobox',
             itemId: 'iterationComboBox',
+            fieldLabel: 'Select Iteration: ',
+            width: 310,
+            labelWidth: 100,
             model: 'UserStory',
             storeConfig: {
                 listeners: {
-                    load: this._onIterationComboboxLoad,
+                    load: this._loadStories,
                     scope: this
                 }
             },
@@ -29,33 +32,21 @@ Ext.define('CustomApp', {
                 scope: this
             },
             cls: 'iteration-filter'
-        },
-        {           
-            xtype: 'rallybutton',
-            text: 'Print Story Cards',
-            handler: this._onButtonPressed,
-            scope: this,
-            cls: 'print-button'
         });
     },
 
-    _onIterationComboboxLoad: function() {
-        this.iterationCombobox = this.down('#iterationComboBox');
-        this._loadStories();
-    },
-
     _loadStories: function() {
-        var userStories = Ext.create('Rally.data.WsapiDataStore', {
+        Ext.create('Rally.data.WsapiDataStore', {
             model: 'User Story',
             autoLoad: true,
-            fetch: true,
+            fetch: ['FormattedID', 'Name', 'Owner', 'Description', 'PlanEstimate'],
             limit: Infinity,
             listeners: {
                 load: this._onStoriesLoaded,
                 scope: this
             },
             filters: [
-                this.iterationCombobox.getQueryFromSelected()
+                this.down('#iterationComboBox').getQueryFromSelected()
             ]
         });
     },
@@ -83,17 +74,26 @@ Ext.define('CustomApp', {
                     html: '<div class="pb"></div>'
                 });
             }
-
-
         }, this); 
+    },
+
+    getOptions: function() {
+        return [
+            {
+                text: 'Print',
+                handler: this._onButtonPressed,
+                scope: this
+            }
+        ];
     },
 
 
     _onButtonPressed: function() {
+        debugger;
         var title, options;
         var css = document.getElementsByTagName('style')[0].innerHTML;
         
-        title = this.iterationCombobox.rawValue + ' Stories';
+        title = this.down('#iterationComboBox').getRawValue() + ' Stories';
         options = "toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=1000,height=500";
         printWindow = window.open('', title, options);
         
