@@ -1,38 +1,20 @@
-Ext.define('CustomApp', {
-    extend: 'Rally.app.App',
+Ext.define('Rally.apps.printstorycards.App', {
+    extend: 'Rally.app.TimeboxScopedApp',
     requires: ['Card'],
     componentCls: 'app',
-    items: [
-        {
-            xtype: 'container',
-            itemId: 'headerContainer'
-        },
-        {
+    scopeType: 'iteration',
+
+    addContent: function() {
+        this.add({
             xtype: 'container',
             itemId: 'card'
-        }
-    ],
-
-    launch: function() {
-        this.down('#headerContainer').add({
-            xtype: 'rallyiterationcombobox',
-            itemId: 'iterationComboBox',
-            fieldLabel: 'Select Iteration: ',
-            width: 310,
-            labelWidth: 100,
-            model: 'UserStory',
-            storeConfig: {
-                listeners: {
-                    load: this._loadStories,
-                    scope: this
-                }
-            },
-            listeners: {
-                select: this._onSelect,
-                scope: this
-            },
-            cls: 'iteration-filter'
         });
+        this._loadStories();
+    },
+
+    onScopeChange: function() {
+        this.down('#card').removeAll();
+        this._loadStories();
     },
 
     _loadStories: function() {
@@ -46,16 +28,10 @@ Ext.define('CustomApp', {
                 scope: this
             },
             filters: [
-                this.down('#iterationComboBox').getQueryFromSelected()
+                this.getContext().getTimeboxScope().getQueryFilter()
             ]
         });
     },
-
-    _onSelect: function() {
-        this.down('#card').removeAll();
-        this._loadStories();
-    },
-
 
     _onStoriesLoaded: function(store, records) {
         Ext.Array.each(records, function(record, index) {
@@ -89,13 +65,18 @@ Ext.define('CustomApp', {
 
 
     _onButtonPressed: function() {
-        debugger;
         var title, options;
         var css = document.getElementsByTagName('style')[0].innerHTML;
         
-        title = this.down('#iterationComboBox').getRawValue() + ' Stories';
+        title = this.getContext().getTimeboxScope().getRecord().get('Name') + ' Stories';
         options = "toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=1000,height=500";
-        printWindow = window.open('', title, options);
+
+        //Need to find out how we check for IE because THIS DOESNT WORK (look online)
+        if (Ext.isIE) {
+            printWindow = window.open();
+        } else {
+            printWindow = window.open('', title, options);
+        }
         
         doc = printWindow.document;
 
@@ -139,8 +120,6 @@ Ext.define('CustomApp', {
         }, this);
 
     }
-
-    
 });
 
 

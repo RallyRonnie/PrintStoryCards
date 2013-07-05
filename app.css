@@ -1,3 +1,6 @@
+.app {
+    margin: 5px;
+}
 
 html {
     background-color: #fff; /* white */
@@ -5,6 +8,10 @@ html {
     font: 14pt / 1.26 Arial, Helvetica, sans-serif; /* unclear */
     margin: 0;
     padding: 0;
+}
+
+.header {
+    margin: 5px;
 }
 
 .description {
@@ -18,7 +25,7 @@ html {
     word-wrap: break-word;
 }
 
-.header {
+.card-header {
     border: 1px;
     border-bottom-style: solid;
     display: table-cell;
@@ -95,18 +102,4 @@ body {
         page-break-after: always;
         clear: both;
     }
-}
-
-.iteration-filter {
-    float: left;
-    display: inline;
-    margin-top: 10px;
-    margin-left: 5px;
-}
-
-.print-button {
-    float: left;
-    margin-left: 10px;
-    display: inline;
-    margin-top: 10px;
 }

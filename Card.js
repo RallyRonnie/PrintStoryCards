@@ -3,7 +3,7 @@ Ext.define('Card', {
     alias: 'widget.card',
     cls: 'card',
     tpl: Ext.create('Ext.XTemplate', '<tpl><div class="artifact">' +
-        '<div class="header">' +
+        '<div class="card-header">' +
             '<span class="storyID">{FormattedID}</span>' +
             '<span class="owner">{[this.getOwnerImage(values)]}</span>' +
             '<span class="ownerText">{[this.getOwnerName(values)]}</span>' +
