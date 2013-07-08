@@ -39,6 +39,14 @@ Ext.define('Rally.apps.printstorycards.App', {
                 record.raw.PlanEstimate = 'None';
             }
 
+            //if (index%4 === 0) {
+            //    this.down('#card').add({
+            //        xtype: 'component',
+            //        html: '<div class="iterTitle">Iteration: ' +
+            //            this.getContext().getTimeboxScope().getRecord().get('Name') +  '</div>'
+            //    });
+            //}
+
             this.down('#card').add({
                 xtype: 'card',
                 data: record.raw
@@ -71,7 +79,6 @@ Ext.define('Rally.apps.printstorycards.App', {
         title = this.getContext().getTimeboxScope().getRecord().get('Name') + ' Stories';
         options = "toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=1000,height=500";
 
-        //Need to find out how we check for IE because THIS DOESNT WORK (look online)
         if (Ext.isIE) {
             printWindow = window.open();
         } else {
@@ -84,6 +91,8 @@ Ext.define('Rally.apps.printstorycards.App', {
 
         doc.write('<html><head><style>' + css + '</style><title>' + title + '</title>');
         doc.write('</head><body class="landscape">');
+        doc.write('<div style="font-weight:bold">Iteration: ' +
+            this.getContext().getTimeboxScope().getRecord().get('Name') +  '</div>');
         doc.write(cardMarkup.getEl().dom.innerHTML);
         doc.write('</body></html>');
         doc.close();
