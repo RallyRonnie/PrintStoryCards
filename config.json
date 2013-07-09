@@ -1,7 +1,7 @@
 {
     "name": "PrintStoryCards",
     "className": "Rally.apps.printstorycards.App",
-    "server": "https://test12cluster.rallydev.com",
+    "server": "https://test15cluster.rallydev.com",
     "sdk": "x",
     "javascript": [
         "Card.js",

@@ -3,6 +3,11 @@ Ext.define('Rally.apps.printstorycards.App', {
     requires: ['Card'],
     componentCls: 'app',
     scopeType: 'iteration',
+    comboboxConfig: {
+        fieldLabel: 'Select Iteration: ',
+        labelWidth: 100,
+        width: 300
+    },
 
     addContent: function() {
         this.add({
@@ -38,14 +43,6 @@ Ext.define('Rally.apps.printstorycards.App', {
             if (record.raw.PlanEstimate === null) {
                 record.raw.PlanEstimate = 'None';
             }
-
-            //if (index%4 === 0) {
-            //    this.down('#card').add({
-            //        xtype: 'component',
-            //        html: '<div class="iterTitle">Iteration: ' +
-            //            this.getContext().getTimeboxScope().getRecord().get('Name') +  '</div>'
-            //    });
-            //}
 
             this.down('#card').add({
                 xtype: 'card',
