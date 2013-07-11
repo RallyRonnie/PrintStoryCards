@@ -40,8 +40,8 @@ Ext.define('Rally.apps.printstorycards.App', {
 
     _onStoriesLoaded: function(store, records) {
         Ext.Array.each(records, function(record, index) {
-            if (record.raw.PlanEstimate === null) {
-                record.raw.PlanEstimate = 'None';
+            if (record.get('PlanEstimate') === null) {
+                record.get('PlanEstimate') = 'None';
             }
 
             this.down('#card').add({
@@ -58,6 +58,8 @@ Ext.define('Rally.apps.printstorycards.App', {
         }, this); 
     },
 
+    // Printing functions:
+
     getOptions: function() {
         return [
             {
@@ -67,7 +69,6 @@ Ext.define('Rally.apps.printstorycards.App', {
             }
         ];
     },
-
 
     _onButtonPressed: function() {
         var title, options;
@@ -96,7 +97,13 @@ Ext.define('Rally.apps.printstorycards.App', {
 
         this._injectCSS(printWindow);
 
-        printWindow.print();
+        if (Ext.isSafari) {
+            var timeout = setTimeout(function() {
+                printWindow.print();
+            }, 500);
+        } else {
+            printWindow.print();
+        }
     },
 
     _injectContent: function(html, elementType, attributes, container){
