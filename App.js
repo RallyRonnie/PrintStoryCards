@@ -41,7 +41,7 @@ Ext.define('Rally.apps.printstorycards.App', {
     _onStoriesLoaded: function(store, records) {
         Ext.Array.each(records, function(record, index) {
             if (record.get('PlanEstimate') === null) {
-                record.get('PlanEstimate') = 'None';
+                record.raw.PlanEstimate = 'None';
             }
 
             this.down('#card').add({
