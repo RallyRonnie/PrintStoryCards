@@ -71,9 +71,11 @@ Ext.define('Rally.apps.printstorycards.App', {
     },
 
     _onButtonPressed: function() {
-        var title, options;
-        var css = document.getElementsByTagName('style')[0].innerHTML;
-        
+        var title, options, css = '';
+        if (document.getElementsByTagName('style').length > 0) {
+            css = document.getElementsByTagName('style')[0].innerHTML;
+        }
+
         title = this.getContext().getTimeboxScope().getRecord().get('Name') + ' Stories';
         options = "toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=1000,height=500";
 
